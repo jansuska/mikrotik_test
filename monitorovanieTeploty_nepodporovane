@@ -1,0 +1,13 @@
+# Monitorink tepltoty
+:local systemTemp [/system health get temperature];
+:local cpuTemp    [/system health get cpu-temperature];
+
+
+:local ADMINMAIL "alarmmasterjs@gmail.com";
+:local mailSubject ("monitorovanie teploty");
+:local mailBody ("Monitorovanie
+                Sys.Temp: ".$systemTemp." C
+                CPU Temp: ".$cpuTemp." C");
+
+
+/tool e-mail send to=$ADMINMAIL subject=$mailSubject body=$mailBody start-tls=yes
