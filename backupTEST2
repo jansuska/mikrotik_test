@@ -28,7 +28,7 @@ on-event=backupTest1 start-date=nov/28/2018 start-time=20:00:00
 /tool e-mail send to=$adminMail subject=$subject      body=$body file="$backupfile,$rscfile" start-tls=yes
 #
 #odoslanie informacneho mailu
-/tool e-mail send to=$adminMail subject="$backupfile" body="backup prebehol uspecne. verzia: $backupfile" start-tls=yes
+#/tool e-mail send to=$adminMail subject="$backupfile" body="backup prebehol uspecne. verzia: $backupfile" start-tls=yes
 #
 
 #zmazanie zalohy
