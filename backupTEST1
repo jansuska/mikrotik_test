@@ -1,0 +1,12 @@
+#
+#
+#spustenie
+/system scheduler
+add comment="" disabled=no interval=1d name="backupSpustac" \
+on-event=backupTest1 start-date=nov/28/2018 start-time=20:00:00
+
+#vytvorenie zalohy
+/system backup save  name=backupTest1.backup
+
+#odoslanie zalohy na ftp
+/tool fetch address=192.168.88.253 src-path=backupTest1.backup user=admin password=admin dst-path=/backupTest1FTP.backup upload=yes mode=ftp
