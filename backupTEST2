@@ -1,0 +1,42 @@
+
+#localne premenne
+
+:local backupfile "backupTest1.backup"
+
+:local adminMail "alarmmasterjs@gmail.com"
+
+:local subject ([/system identity get name] . " configuration backup")
+
+:local body ([/system identity get name] . " configuration backup")
+
+:local backupfile ([/system identity get name] . ".backup")
+
+:local rscfile ([/system identity get name] . ".rsc")
+
+#spustenie
+/system scheduler
+add comment="" disabled=no interval=1d name="backupSpustac" \
+on-event=backupTest1 start-date=nov/28/2018 start-time=20:00:00
+
+#ulozenie
+/system backup save name=$backupfile
+#moje /system backup save  name=backup$[/system clock get date].backup
+
+/export file=$rscfile
+
+#odoslanie
+/tool e-mail send to=$adminMail subject=$subject      body=$body file="$backupfile,$rscfile" start-tls=$starttls
+#
+#odoslanie informacneho mailu
+/tool e-mail send to=$adminMail subject="$backupfile" body="backup prebehol uspecne. verzia: $backupfile" start-tls=yes
+#
+
+#zmazanie zalohy
+/file remove $backupfile
+/file remove $rscfile
+
+#oneskorenie
+:delay 10s
+
+#zapisanie do log
+:log info ("backup script prebehol")
