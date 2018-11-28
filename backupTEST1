@@ -1,3 +1,5 @@
+:local backupfile=backupTest1.backup
+:local adminMail "alarmmasterjs@gmail.com"
 #
 #
 #spustenie
@@ -5,8 +7,30 @@
 add comment="" disabled=no interval=1d name="backupSpustac" \
 on-event=backupTest1 start-date=nov/28/2018 start-time=20:00:00
 
+
 #vytvorenie zalohy
-/system backup save  name=backupTest1.backup
+/system backup save  name=backup$[/system clock get date].backup
+
+#oneskorenie
+:delay 10s
 
 #odoslanie zalohy na ftp
-/tool fetch address=192.168.88.253 src-path=backupTest1.backup user=admin password=admin dst-path=/backupTest1FTP.backup upload=yes mode=ftp
+/tool fetch address=192.168.88.253 src-path=$backupfile user=admin password=admin dst-path=/$backupfile upload=yes mode=ftp
+
+#oneskorenie
+:delay 10s
+
+#zmazanie zalohy
+/file remove $backupfile
+
+#oneskorenie
+:delay 10s
+
+#odoslanie informacneho mailu
+/tool e-mail send to=$adminMail subject="$backupfile" body="backup prebehol uspecne. verzia: $backupfile" start-tls=yes
+
+#oneskorenie
+:delay 10s
+
+#zapisanie do log
+:log info ("backup script prebehol")
