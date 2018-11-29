@@ -12,6 +12,18 @@
 #ezport backupu do file rsc
 /export file=$rscfile
 
+#ping na osmicky
+
+:local HOST "8.8.8.8"
+:local PINGCOUNT "1"
+:local DELAY "1s"
+:local ADMINMAIL "alarmmasterjs@gmail.com"
+
+:if ([/ping $HOST interval=1 count=$PINGCOUNT] = 0) do={
+
+:log error "zalohu sa nepodarilo odoslat, $HOST nedostupny"
+
+} else {
 #odoslanie
 /tool e-mail send to=$adminMail subject="backup"      body=$body file="$backupfile,$rscfile" start-tls=yes
 
@@ -27,3 +39,4 @@
 
 #zapisanie do log
 :log info ("backup script prebehol")
+}
