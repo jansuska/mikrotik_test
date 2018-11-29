@@ -1,0 +1,4 @@
+#spustenie
+/system scheduler
+add comment="" disabled=no interval=1d name="backupSpustac" \
+on-event=backupTest1 start-date=nov/28/2018 start-time=20:00:00
