@@ -1,0 +1,8 @@
+:local filename "test.txt"
+:local content "pokus obsahu.
+[/ip dhcp-server lease print]"
+
+# Create file.
+  /file print file=$filename
+# Set file's content.
+  /file set $filename contents=$content

@@ -16,8 +16,8 @@
 
 :local HOST "8.8.8.8"
 :local PINGCOUNT "1"
-:local DELAY "1s"
-:local ADMINMAIL "alarmmasterjs@gmail.com"
+
+
 
 :if ([/ping $HOST interval=1 count=$PINGCOUNT] = 0) do={
 
