@@ -1,7 +1,10 @@
 
+#vytvorenie zalohy, odoslanie na mail, zmazanie zalohy, zapisanie do log
+#nefunguje kvoli riadku 7
+
 #localne premenne
 
-:local backupfile "backupTest1.backup"
+:local backupfile "backup$[/system identity get name]$[/system clock get date]$[/system clock get time].backup"
 
 :local adminMail "alarmmasterjs@gmail.com"
 
@@ -9,27 +12,25 @@
 
 :local body ([/system identity get name] . " configuration backup")
 
-:local backupfile ([/system identity get name] . ".backup")
 
-:local rscfile ([/system identity get name] . ".rsc")
 
-#spustenie
-/system scheduler
-add comment="" disabled=no interval=1d name="backupSpustac" \
-on-event=backupTest1 start-date=nov/28/2018 start-time=20:00:00
+:local rscfile  "backup$[/system identity get name]$[/system clock get date]$[/system clock get time].rsc"
+
 
 #ulozenie
 /system backup save name=$backupfile
-#moje /system backup save  name=backup$[/system clock get date].backup
 
+#ezport backupu do file rsc
 /export file=$rscfile
 
 #odoslanie
 /tool e-mail send to=$adminMail subject=$subject      body=$body file="$backupfile,$rscfile" start-tls=yes
-#
-#odoslanie informacneho mailu
-#/tool e-mail send to=$adminMail subject="$backupfile" body="backup prebehol uspecne. verzia: $backupfile" start-tls=yes
-#
+#fungujuce odoslanie z test3
+#/tool e-mail send to=$adminMail subject="backup"      body=$body file="$backupfile,$rscfile" start-tls=yes
+
+
+#oneskorenie
+:delay 10s
 
 #zmazanie zalohy
 /file remove $backupfile

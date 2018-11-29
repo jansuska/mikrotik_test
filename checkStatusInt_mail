@@ -4,17 +4,14 @@
 :local ADMINMAIL "alarmmasterjs@gmail.com"
 
 
-:if ([/interface ethernet get ether1 running]=true) \
-:do {
+:if ([/interface ethernet get ether1 running]=true) :do {
 :local status
 :set status [/interface get [/interface find name="ether1"] running]
 
-:if ($status=true)
-do={
+:if ($status=true) do={
 /tool e-mail send to=$ADMINMAIL subject="int neodpoveda" body="Dany interface je nedostupny $[/system clock get date]" start-tls=yes
 }
 
-:if ($status=false)
-do={
+:if ($status=false) do={
 /tool e-mail send to=$ADMINMAIL subject="int odpoveda" body="int je dostupny $[/system clock get date]" start-tls=yes
 }
