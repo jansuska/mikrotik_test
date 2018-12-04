@@ -1,0 +1,13 @@
+#kontrola vytazenia dhcp pool
+#blbost
+:local adminMail "alarmmasterjs@gmail.com"
+:local numberOfPool [/ip dhcp-server lease print count-only]
+:local maxNumber 1
+
+
+do {
+:log warning ("dhcp pool je vytazeny nad 90%")
+/tool e-mail send to=$adminMail subject="dhcp pool je vytazeny nad 90%" body="
+Dna $[/system clock get date] v case $[/system clock get time]
+dhcp pool je vytazeny nad 90%" start-tls=yes
+} while=($numberOfPool/$maxNumber*100<90);
